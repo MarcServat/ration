@@ -60,6 +60,7 @@ module.exports.routes = {
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝
   '/terms':                   '/legal/terms',
+  '/help':                   '/contact',
   '/logout':                  '/api/v1/account/logout',
 
 };
