@@ -72,6 +72,10 @@ module.exports.bootstrap = async function(done) {
     password: await sails.helpers.passwords.hashPassword('abc123')
   }).fetch();
 
+  // Make a relationship not in database but behind scenes
+  User.addToCollection(marcServat, 'friends', admin.id);
+  // User.addToCollection(admin.id, 'friends', marcServat.id);
+
   await Thing.createEach([
     {label: 'Whether you love to run or bike this LED reflective vest will keep you safe at night. With 2 LED strips on the…', owner: marcServat.id},
     {label: 'Tell everyone who visits your desk you woke up like this or that you’re productive as f**k with these sassy desk plates. With…', owner: marcServat.id},

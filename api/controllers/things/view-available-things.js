@@ -18,8 +18,17 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
+    var me = await URLSearchParams.findOne({
+      id: this.req.me.id
+    }).populate('friends');
+
+    var friendIds = _.pluck(me.friends, 'id');
+
     var things = await Thing.find({
-      owner: this.req.me.id
+      or: [
+        { owner: this.req.me.id },
+        { owner: { in: friendIds } }
+      ]
     });
     // Respond with view.
     return exits.success({

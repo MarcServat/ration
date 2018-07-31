@@ -3,7 +3,8 @@ parasails.registerPage('available-things', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    //…
+    things: [],
+    confirmDeleteThingModalOpen: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -29,6 +30,11 @@ parasails.registerPage('available-things', {
       await Cloud.destroyOneThing.with({ id: thingId }).log();
       _.remove(this.things, { id: thingId });
       this.$forceUpdate();
+    },
+
+    clickDeleteThing() {
+      console.log('delete item');
+      this.confirmDeleteThingModalOpen = true;
     }
   }
 });
