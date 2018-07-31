@@ -18,7 +18,9 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-    var things = await Thing.find();
+    var things = await Thing.find({
+      owner: this.req.me.id
+    });
     // Respond with view.
     return exits.success({
       things

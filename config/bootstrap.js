@@ -15,7 +15,7 @@ module.exports.bootstrap = async function(done) {
   var path = require('path');
 
   // This bootstrap version indicates what version of fake data we're dealing with here.
-  var HARD_CODED_DATA_VERSION = 0;
+  var HARD_CODED_DATA_VERSION = 2;
 
   // This path indicates where to store/look for the JSON file that tracks the "last run bootstrap info"
   // locally on this development computer (if we happen to be on a development computer).
@@ -59,8 +59,24 @@ module.exports.bootstrap = async function(done) {
   }//∞
 
   // By convention, this is a good place to set up fake data during development.
-  await User.createEach([
-    { emailAddress: 'admin@example.com', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123') },
+  var admin = await User.create({
+    emailAddress: 'admin@example.com',
+    fullName: 'Ryan Dahl',
+    isSuperAdmin: true,
+    password: await sails.helpers.passwords.hashPassword('abc123')
+  }).fetch();
+
+  var marcServat = await User.create({
+    emailAddress: 'marcsrvt@example.com',
+    fullName: 'Marc Servat',
+    password: await sails.helpers.passwords.hashPassword('abc123')
+  }).fetch();
+
+  await Thing.createEach([
+    {label: 'Whether you love to run or bike this LED reflective vest will keep you safe at night. With 2 LED strips on the…', owner: marcServat.id},
+    {label: 'Tell everyone who visits your desk you woke up like this or that you’re productive as f**k with these sassy desk plates. With…', owner: marcServat.id},
+    {label: 'You don’t have to be an astronaut to photograph moon craters. And you don’t have to get close to a lion to capture…', owner: admin.id},
+    {label: 'Keep your laundry room mildew free with the Laundry Lasso. Keeping your washer door propped open is a no brainer but can be annoying', owner: admin.id},
   ]);
 
   // Save new bootstrap version
